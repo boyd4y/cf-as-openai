@@ -11,39 +11,34 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import handleProxy from './proxy';
-import handleRedirect from './redirect';
-import apiRouter from './router';
+import chatHandler from './chat';
+import modelsHandler from './models';
 
-// Export a default object containing event handlers
 export default {
-	// The fetch handler is invoked when this worker receives a HTTP(S) request
 	// and should return a Response (optionally wrapped in a Promise)
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		// You'll find it helpful to parse the request.url string into a URL object. Learn more at https://developer.mozilla.org/en-US/docs/Web/API/URL
+		let headers = new Headers();
+		headers.set('Access-Control-Allow-Origin', '*');
+		headers.set('Access-Control-Allow-Headers', '*');
+  
 		const url = new URL(request.url);
-
-		// You can get pretty far with simple logic like if/switch-statements
-		switch (url.pathname) {
-			case '/redirect':
-				return handleRedirect.fetch(request, env, ctx);
-
-			case '/proxy':
-				return handleProxy.fetch(request, env, ctx);
+		if (request.type === 'OPTIONS' || request.method === 'OPTIONS') {
+			return new Response('', { status: 200, headers: headers });
 		}
-
-		if (url.pathname.startsWith('/api/')) {
-			// You can also use more robust routing
-			return apiRouter.handle(request);
+		const auth_header = request.headers.get('Authorization')
+		if (!auth_header || !auth_header.startsWith('Bearer ')) {
+			return new Response('missing key', { status: 400, headers: headers });
 		}
-
-		return new Response(
-			`Try making requests to:
-      <ul>
-      <li><code><a href="/redirect?redirectUrl=https://example.com/">/redirect?redirectUrl=https://example.com/</a></code>,</li>
-      <li><code><a href="/proxy?modify&proxyUrl=https://example.com/">/proxy?modify&proxyUrl=https://example.com/</a></code>, or</li>
-      <li><code><a href="/api/todos">/api/todos</a></code></li>`,
-			{ headers: { 'Content-Type': 'text/html' } }
-		);
+		const api_key = auth_header.substring(7).trim()
+		// auth check env.API_KEY
+		if (env.API_KEY != api_key) {
+			return new Response('invalid key', { status: 400, headers: headers });
+		}
+		if (url.pathname === '/v1/chat/completions') {
+			return chatHandler.fetch(request, env, ctx);
+		} else if (url.pathname === '/v1/models') {
+			return modelsHandler.fetch(request, env, ctx);
+		}
+		return new Response('Bad request', { status: 200, headers: headers});
 	},
 };

@@ -93,3 +93,9 @@ you have three ways to access specified model
 | <input type="checkbox" checked /> embeddings  |    /v1/embeddings  |
 | <input type="checkbox" checked /> text to image  |    /v1/images/generations  |
 | <input type="checkbox" disabled /> text to speech  |    /v1/audio/speech  |
+
+## Recommend Client
+since cf-as-openai follow the standard openai API format, all openai capatable client could use it.
+
+- https://app.nextchat.dev/#/
+

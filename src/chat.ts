@@ -19,6 +19,10 @@ export default {
 		let headers = new Headers();
 		headers.set('content-type', 'text/event-stream');
 		headers.set('Cache-Control', 'no-cache, must-revalidate');
+		headers.set('Access-Control-Allow-Origin', '*');
+		headers.set('Access-Control-Allow-Credentials', true);
+		headers.set('Access-Control-Allow-Methods', '*');
+		headers.set('Access-Control-Allow-Headers', '*');
 		let data = await request.json()
 		let model = data.model
 		let id = null

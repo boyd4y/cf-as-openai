@@ -24,9 +24,7 @@ export default {
 		const url = new URL(request.url);
 		if (request.type === 'OPTIONS' || request.method === 'OPTIONS') {
 			response = new Response('', { status: 200 });
-		}
-		if (url.pathname.startsWith('/v1/images/get')) {
-			console.log('fetch public image')
+		} else if (url.pathname.startsWith('/v1/images/get')) {
 			response = accessImageHandler.fetch(request, env, ctx);
 		} else {
 			const auth_header = request.headers.get('Authorization')

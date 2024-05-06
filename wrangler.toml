@@ -6,7 +6,15 @@ workers_dev = true
 
 [vars]
 API_KEY = "cf-123456789"
-MODEL_PREFIX = "gpt-3.5-"
+R2_DOMAIN = ""
+TEXT_MODEL_PREFIX = "gpt-3.5-"
+IMAGE_MODEL_PREFIX = "dall-e-"
+EMBEDDING_MODEL_PREFIX = "text-embedding-"
 
 [ai]
 binding = "AI"
+
+[[r2_buckets]]
+binding = "MY_BUCKET"
+bucket_name = "image-bucket"
+preview_bucket_name = "image-bucket-preview"

@@ -1,12 +1,16 @@
 {
-  "name": "white-scene-699e",
-  "version": "0.0.0",
+  "name": "cf-as-openai",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
     "start": "wrangler dev",
     "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "@cloudflare/ai": "^1.0.15",
+    "itty-router": "5.0.17"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240423.0",

@@ -13,32 +13,52 @@
 
 import chatHandler from './chat';
 import modelsHandler from './models';
+import embeddingsHandler from './embeddings';
+import imageHandler from './image';
+import accessImageHandler from './access_image';
 
 export default {
 	// and should return a Response (optionally wrapped in a Promise)
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		let headers = new Headers();
-		headers.set('Access-Control-Allow-Origin', '*');
-		headers.set('Access-Control-Allow-Headers', '*');
-  
+		let response = null
 		const url = new URL(request.url);
 		if (request.type === 'OPTIONS' || request.method === 'OPTIONS') {
-			return new Response('', { status: 200, headers: headers });
+			response = new Response('', { status: 200 });
 		}
-		const auth_header = request.headers.get('Authorization')
-		if (!auth_header || !auth_header.startsWith('Bearer ')) {
-			return new Response('missing key', { status: 400, headers: headers });
+		if (url.pathname.startsWith('/v1/images/get')) {
+			console.log('fetch public image')
+			response = accessImageHandler.fetch(request, env, ctx);
+		} else {
+			const auth_header = request.headers.get('Authorization')
+			if (!auth_header || !auth_header.startsWith('Bearer ')) {
+				response = new Response('missing key', { status: 400 });
+			} else {
+				const api_key = auth_header.substring(7).trim()
+				// auth check env.API_KEY
+				if (env.API_KEY != api_key) {
+					response = new Response('invalid key', { status: 400 });
+				}
+				if (url.pathname === '/v1/chat/completions') {
+					response = chatHandler.fetch(request, env, ctx);
+				} else if (url.pathname === '/v1/models') {
+					response = modelsHandler.fetch(request, env, ctx);
+				} else if (url.pathname === '/v1/embeddings') {
+					response = embeddingsHandler.fetch(request, env, ctx);
+				} else if (url.pathname === '/v1/images/generations') {
+					response = imageHandler.fetch(request, env, ctx);
+				} else {
+					response = new Response('Bad request', { status: 400});
+				}
+			}
 		}
-		const api_key = auth_header.substring(7).trim()
-		// auth check env.API_KEY
-		if (env.API_KEY != api_key) {
-			return new Response('invalid key', { status: 400, headers: headers });
+		
+		if (!response.headers) {
+			response.headers = new Headers();
 		}
-		if (url.pathname === '/v1/chat/completions') {
-			return chatHandler.fetch(request, env, ctx);
-		} else if (url.pathname === '/v1/models') {
-			return modelsHandler.fetch(request, env, ctx);
-		}
-		return new Response('Bad request', { status: 200, headers: headers});
+		response.headers.set('Access-Control-Allow-Origin', '*');
+		response.headers.set('Access-Control-Allow-Credentials', true);
+		response.headers.set('Access-Control-Allow-Methods', '*');
+		response.headers.set('Access-Control-Allow-Headers', '*');
+		return response
 	},
 };

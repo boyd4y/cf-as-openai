@@ -4,12 +4,12 @@ const decoder = new TextDecoder('utf-8');  // 默认就是 'utf-8', 也可以显
 const encoder = new TextEncoder('utf-8');  // 默认就是 'utf-8', 也可以显式指定
 import MODELS from '../config/models.json'
 
-const MODELS_ID_MAP = MODELS.reduce(function (map, obj) {
+const MODELS_ID_MAP = MODELS.text_models.reduce(function (map, obj) {
 	map[obj.id] = obj;
 	return map;
 }, {});
 
-const MODELS_NAME_MAP = MODELS.reduce(function (map, obj) {
+const MODELS_NAME_MAP = MODELS.text_models.reduce(function (map, obj) {
 	map[obj.name] = obj;
 	return map;
 }, {});
@@ -18,17 +18,12 @@ export default {
 	async fetch(request, env: any) {
 		let headers = new Headers();
 		headers.set('content-type', 'text/event-stream');
-		headers.set('Access-Control-Allow-Origin', '*');
-		headers.set('Access-Control-Allow-Credentials', true);
-		headers.set('Access-Control-Allow-Methods', '*');
-		headers.set('Access-Control-Allow-Headers', '*');
 		headers.set('Cache-Control', 'no-cache, must-revalidate');
-
 		let data = await request.json()
 		let model = data.model
 		let id = null
-		if (model.startsWith(env.MODEL_PREFIX)) {
-			model = model.substring(env.MODEL_PREFIX.length)
+		if (model.startsWith(env.TEXT_MODEL_PREFIX)) {
+			model = model.substring(env.TEXT_MODEL_PREFIX.length)
 		}
 		if (model.endsWith('-beta')) {
 			model = model.substring(0, model.length - '-beta'.length)
@@ -53,13 +48,11 @@ export default {
 		const transformer = new TransformStream({
 			transform(chunk, controller) {
 				buffer += decoder.decode(chunk);
-				// Process buffered data and try to find the complete message
 				while (true) {
 					const newlineIndex = buffer.indexOf('\n');
 					if (newlineIndex === -1) {
 						break;
 					}
-
 					const line = buffer.slice(0, newlineIndex + 1);
 					buffer = buffer.slice(newlineIndex + 1);
 					try {

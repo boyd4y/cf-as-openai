@@ -4,21 +4,38 @@ import MODELS from '../config/models.json'
 
 export default {
     async fetch(request, env: any) {
-		let headers = new Headers();
-		headers.set('Access-Control-Allow-Origin', '*');
-		headers.set('Access-Control-Allow-Headers', '*');
 		const created = Math.floor(Date.now() / 1000);
+		let all_models = []
+		all_models = all_models.concat(MODELS.text_models.map(x => {
+			return {
+				"id": `${env.TEXT_MODEL_PREFIX}${x.name}${x.beta ? '-beta' : ''}`,
+				"name": x.name,
+				"created": created,
+				"object": "model",
+				"owned_by": "cloudflare"
+			}
+		}))
+		all_models = all_models.concat(MODELS.embeddings_models.map(x => {
+			return {
+				"id": `${env.EMBEDDING_MODEL_PREFIX}${x.name}${x.beta ? '-beta' : ''}`,
+				"name": x.name,
+				"created": created,
+				"object": "model",
+				"owned_by": "cloudflare"
+			}
+		}))
+		all_models = all_models.concat(MODELS.images_models.map(x => {
+			return {
+				"id": `${env.IMAGE_MODEL_PREFIX}${x.name}${x.beta ? '-beta' : ''}`,
+				"name": x.name,
+				"created": created,
+				"object": "model",
+				"owned_by": "cloudflare"
+			}
+		}))
 		return new Response(JSON.stringify({
 			"object": "list",
-			"data": MODELS.map(x => {
-				return {
-					"id": `${env.MODEL_PREFIX}${x.name}${x.beta ? '-beta' : ''}`,
-					"name": x.name,
-					"created": created,
-					"object": "model",
-					"owned_by": "cloudflare"
-				}
-			})
-		}), { status: 200, headers: headers});
+			"data": all_models
+		}), { status: 200});
     },
   } satisfies ExportedHandler;

@@ -27,9 +27,9 @@ npm run dev
 
 You'll be greeted with an OpenAPI page that you can use to test and call your endpoints.
 
-## Deploy
+## Manually Deploy
 
-Once you are ready, you can publish your code by running the following command:
+Once you repo ready, you can publish your code by running the following command:
 
 ```sh
 $ npm run deploy
@@ -99,3 +99,6 @@ since cf-as-openai follow the standard openai API format, all openai capatable c
 
 - https://app.nextchat.dev/#/
 
+
+## Buy My a Coffee
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/boyd4yd)

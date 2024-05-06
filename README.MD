@@ -1,20 +1,9 @@
-## Template: cf-as-openapi
+## cf-as-openapi
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/boyd4y/cf-as-openai)
 
-This template demonstrates using the [`cf-as-openai`](https://github.com/boyd4y/cf-as-openai) template to expose Cloudflare AI workers with OpenAI API Standard.
-
-
-## Setup
-
-clone the repo to run:
-
-```sh
-$ git clone https://github.com/boyd4y/cf-as-openai.git
-$ npm i
-# or
-$ pnpm i
-```
+This repository demonstrates using the [`cf-as-openai`](https://github.com/boyd4y/cf-as-openai) template to expose Cloudflare AI model workers as OpenAI Standard API.  
+Which means you can use Cloudflare beta model for free.
 
 ## Local development
 
@@ -28,10 +17,13 @@ npm run dev
 You'll be greeted with an OpenAPI page that you can use to test and call your endpoints.
 
 ## Manually Deploy
-
+We recommend you just click the button on the top to deploy to CF in seconds.
+By the way, you could also deploy manually by your self
 Once you repo ready, you can publish your code by running the following command:
 
 ```sh
+$ git clone https://github.com/boyd4y/cf-as-openai.git
+$ npm i
 $ npm run deploy
 ```
 

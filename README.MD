@@ -7,17 +7,14 @@ This template demonstrates using the [`cf-as-openai`](https://github.com/boyd4y/
 
 ## Setup
 
-To create a `my-project` directory using this template, run:
+clone the repo to run:
 
 ```sh
-$ npm init cloudflare my-project worker-openapi
+$ git clone https://github.com/boyd4y/cf-as-openai.git
+$ npm i
 # or
-$ yarn create cloudflare my-project worker-openapi
-# or
-$ pnpm create cloudflare my-project worker-openapi
+$ pnpm i
 ```
-
-> **Note:** Each command invokes [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) for project creation.
 
 ## Local development
 

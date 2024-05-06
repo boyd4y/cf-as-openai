@@ -1,11 +1,11 @@
 #:schema node_modules/wrangler/config-schema.json
-name = "white-scene-699e"
+name = 'cf-as-openai'
 main = "src/index.ts"
 compatibility_date = "2024-04-05"
 workers_dev = true
 
 [vars]
-API_KEY = "cf-BHysWVezUVCiRRv596rcQtrJNohu3Zi5"
+API_KEY = "cf-123456789"
 MODEL_PREFIX = "gpt-3.5-"
 
 [ai]

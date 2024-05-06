@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "deploy": "wrangler deploy",
-    "dev": "CLOUDFLARE_API_TOKEN=CbdzHRb8c5ARihLuU-vQoP9XPMM3gw0kkjU-a7mR wrangler dev",
+    "dev": "wrangler dev",
     "start": "wrangler dev",
     "cf-typegen": "wrangler types"
   },

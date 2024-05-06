@@ -3,13 +3,13 @@ from openai import OpenAI
 
 KEYS = {
   'local': {
-    'key': 'cf-BHysWVezUVCiRRv596rcQtrJNohu3Zi5',
+    'key': 'cf-123456789',
     'endpoint': 'http://localhost:8787/v1',
     'model': 'gpt-3.5-turbo'
   },
   'cf': {
-    'key': 'cf-BHysWVezUVCiRRv596rcQtrJNohu3Zi5',
-    'endpoint': 'https://white-scene-699e.boyd4y.workers.dev/v1',
+    'key': 'cf-123456789',
+    'endpoint': '<your cf production endpoint>',
     'model': '@cf/qwen/qwen1.5-0.5b-chat'
   }
 }

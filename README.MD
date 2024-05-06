@@ -65,6 +65,8 @@ API_KEY = "cf-123456789"
 TEXT_MODEL_PREFIX = "gpt-3.5-"
 IMAGE_MODEL_PREFIX = "dall-e-"
 EMBEDDING_MODEL_PREFIX = "text-embedding-"
+IMAGE_MODEL_PREFIX = "dall-e-"
+EMBEDDING_MODEL_PREFIX = "text-embedding-"
 ```
 please remember update wrangler.toml and deploy again.
 
@@ -72,7 +74,7 @@ please remember update wrangler.toml and deploy again.
 ## Model
 basically we support all models listed [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/models/)
 
-also, we have update.py to dump the latest models to local ./config/models.json.  
+also, we have update.py to fetch the latest models to local ./config/models.json  
 
 
 you have three ways to access specified model

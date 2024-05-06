@@ -86,13 +86,11 @@ you have three ways to access specified model
 > Workers AI will begin billing for usage on non-beta models after April 1, 2024. Refer to Pricing for more details.
 
 ## TODO
-| api                                              | note |
-| ------------------------------------------------- | ---- |
-| <input type="checkbox" checked /> list models  |    /v1/models  |
-| <input type="checkbox" checked/> chat completions |   /v1/chat/completions   |
-| <input type="checkbox" checked /> embeddings  |    /v1/embeddings  |
-| <input type="checkbox" checked /> text to image  |    /v1/images/generations  |
-| <input type="checkbox" disabled /> text to speech  |    /v1/audio/speech  |
+- ✅ list models  endpoint: /v1/models
+- ✅ chat completions  endpoint: /v1/chat/completions
+- ✅ text to image  endpoint: /v1/images/generations
+- ❌ text to speech  endpoint: /v1/audio/speech
+
 
 ## Recommend Client
 since cf-as-openai follow the standard openai API format, all openai capatable client could use it.
@@ -100,5 +98,5 @@ since cf-as-openai follow the standard openai API format, all openai capatable c
 - https://app.nextchat.dev/#/
 
 
-## Buy My a Coffee
+## Donate
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/boyd4yd)
